@@ -14,8 +14,7 @@ class Fan {
     private boolean on = false;
     private double radius = 5;
     private String color = "blue";
-
-    //get
+//get
     public int getSLOW() {
         return this.SLOW;
     }
