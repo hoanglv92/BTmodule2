@@ -3,7 +3,7 @@ public class FanSpeed {
         Fan fan=new Fan(3,true,7,"red");
         System.out.println(" quạt 1 : " +fan.toString());
         Fan fan1=new Fan(1,false,5,"blue");
-        System.out.println(" quạt 1 : " +fan1.toString());
+        System.out.println(" quạt 2 : " +fan1.toString());
     }
 }
 class Fan {
@@ -49,8 +49,8 @@ class Fan {
         this.speed = speed;
     }
 
-    public boolean isOn() {
-        return on;
+    public boolean isOn(boolean ison ) {
+        this.ison= ison;
     }
 
     public void setOn(boolean on) {
