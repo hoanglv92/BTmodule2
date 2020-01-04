@@ -1,4 +1,4 @@
-package BT;
+package ClassCricleVsCylinder;
 
 public class Cricle {
     private String color;
