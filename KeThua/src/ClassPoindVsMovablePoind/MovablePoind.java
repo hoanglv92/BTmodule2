@@ -49,8 +49,8 @@ public class MovablePoind extends Poind {
     }
 
     public float[] move(){
-        float x = 0;
-        float y=0;
+        float x = this.getX();
+        float y=this.getY();
         float[]arr1=new float[2];
         x=xspeed+getX();
         y=yspeed+getY();
@@ -62,6 +62,8 @@ public class MovablePoind extends Poind {
     @Override
     public String toString() {
         return "MovablePoind{" +
+                "x="+getX()+
+                ", y="+getY()+
                 "xspeed=" + xspeed +
                 ", yspeed=" + yspeed +
                 ",speed="+ Arrays.toString(getspeed()) +

@@ -9,5 +9,8 @@ public class TestPoindspeed {
         System.out.println(Arrays.toString(movablePoind.getspeed()));
         System.out.println(movablePoind.toString());
         System.out.println(poind.toString());
+        System.out.println(movablePoind);
+        movablePoind.move();
+        System.out.println(movablePoind);
     }
 }
