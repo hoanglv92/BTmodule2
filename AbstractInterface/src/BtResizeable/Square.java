@@ -34,7 +34,7 @@ public class Square extends Shape implements Resizeable {
     public String toString() {
         return "Square{" +
                 "side=" + side +
-                ", color='" + color + '\'' +
+//                ", color='" + color + '\'' +
                 ",area=" +String.valueOf(getArea())+
                 ",chu vi="+ String.valueOf(getChuvi())+
                 ", boder=" + boder +

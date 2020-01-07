@@ -31,7 +31,7 @@ public class Cricle extends Shape implements Resizeable{
     public String toString() {
         return "Cricle{" +
                 "radius=" + radius +
-                ", color='" + color + '\'' +
+//                ", color='" + color + '\'' +
                 ",S="+String.valueOf(getArea())+
                 ",Chu vi="+String.valueOf(getChuvi())+
                 ", boder=" + boder +

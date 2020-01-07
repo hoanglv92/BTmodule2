@@ -43,7 +43,7 @@ public class Rectangle extends Shape implements Resizeable {
         return "Rectangle{" +
                 "width=" + width +
                 ", heght=" + heght +
-                ", color='" + color + '\'' +
+//                ", color='" + color + '\'' +
                 ",S="+String.valueOf(getArea())+
                 ",Chu vi="+String.valueOf(getChuvi())+
                 ", boder=" + boder +

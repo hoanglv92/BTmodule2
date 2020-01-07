@@ -1,6 +1,10 @@
 package BtResizeable;
 
 public interface Resizeable {
-     void resize(double pacent);
+     String color="black";
+
+     default void resize(double pacent){
+          System.out.println("color all four side");
+     }
 
 }
