@@ -40,7 +40,7 @@ public class Cricle extends Shape implements Resizeable{
 
     @Override
     public void resize(double pacent) {
-        this.setRadius(getRadius()*pacent);
+        this.setRadius(getRadius()*pacent+getRadius());
 
     }
 }

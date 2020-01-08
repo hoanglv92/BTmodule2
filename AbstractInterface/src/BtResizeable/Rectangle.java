@@ -52,8 +52,8 @@ public class Rectangle extends Shape implements Resizeable {
 
     @Override
     public void resize(double pacent) {
-      this.setHeght(getHeght()*pacent);
-      this.setWidth(getWidth()*pacent);
+      this.setHeght(getHeght()*pacent+getHeght());
+      this.setWidth(getWidth()*pacent+getWidth());
 
     }
 }

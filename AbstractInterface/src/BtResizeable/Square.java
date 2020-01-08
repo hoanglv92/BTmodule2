@@ -43,6 +43,6 @@ public class Square extends Shape implements Resizeable {
 
     @Override
     public void resize(double pacent) {
-        setSide(getSide()*pacent);
+        setSide(getSide()*pacent+getSide());
     }
 }
