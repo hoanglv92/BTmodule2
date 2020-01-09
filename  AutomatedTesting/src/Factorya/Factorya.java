@@ -1,12 +1,9 @@
 package Factorya;
-
 public class Factorya {
     private int number;
-
     public Factorya(int number) {
         this.number = number;
     }
-
     public long getNumber() {
         return number;
     }
