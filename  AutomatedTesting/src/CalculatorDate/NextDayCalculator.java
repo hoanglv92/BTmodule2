@@ -16,7 +16,7 @@ public class NextDayCalculator {
         day=sc.nextInt();
         System.out.println("tháng: ");
         month=sc.nextInt();
-        int monthSecond = month+1;
+        int monthSecond = month;
         System.out.println("năm: ");
         year=sc.nextInt();
         int yearSecond=year;
@@ -26,7 +26,7 @@ public class NextDayCalculator {
                     daySecond=day+1;
                 }else if (day==29){
                     daySecond=1;
-                    monthSecond=month+1;
+                    monthSecond+=1;
                     }else {
                     System.out.println("tháng 2 không thể quá 29 ngày");
                 }
