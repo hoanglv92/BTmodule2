@@ -13,6 +13,7 @@ public class StudentsManagerment {
         }
         addEplement(studentArrayList);
         editEmplement(studentArrayList);
+        removeEmplement(studentArrayList);
 
 
     }
