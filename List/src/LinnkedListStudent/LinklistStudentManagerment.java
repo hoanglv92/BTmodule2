@@ -17,7 +17,7 @@ public class LinklistStudentManagerment {
         sc.nextLine();
         System.out.println("nhập vào thông tin các học viện, theo thứ tự tên, mã học viên, tuổi, nơi ở:");
         LinkedList <Student> list=new LinkedList<Student>();
-        
+
         for(int i=0;i<numberStudent;i++){
             Student student=new Student(name=sc.nextLine(),id=sc.nextLine(),year=sc.nextLine(),location=sc.nextLine());
             list.add(student);
