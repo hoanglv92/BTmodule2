@@ -4,13 +4,13 @@ package LinnkedListStudent;
 public class Student {
     private String name;
     private String id;
-    private int year;
+    private String year;
     private String location;
 
     public Student() {
     }
 
-    public Student(String name, String id, int year, String location) {
+    public Student(String name, String id, String year, String location) {
         this.name = name;
         this.id = id;
         this.year = year;
@@ -33,11 +33,11 @@ public class Student {
         this.id = id;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 

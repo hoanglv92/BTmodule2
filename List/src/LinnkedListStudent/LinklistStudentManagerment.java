@@ -9,7 +9,7 @@ public class LinklistStudentManagerment {
         int numberStudent;
         String name;
         String id;
-        int year;
+        String year;
         int luachon ;
         String location;
         System.out.println("nhập vào số học sinh:");
@@ -17,8 +17,9 @@ public class LinklistStudentManagerment {
         sc.nextLine();
         System.out.println("nhập vào thông tin các học viện, theo thứ tự tên, mã học viên, tuổi, nơi ở:");
         LinkedList <Student> list=new LinkedList<Student>();
-        for(int i=0;i<=numberStudent;i++){
-            Student student=new Student(name=sc.nextLine(),id=sc.nextLine(),year=sc.nextInt(),location=sc.nextLine());
+        
+        for(int i=0;i<numberStudent;i++){
+            Student student=new Student(name=sc.nextLine(),id=sc.nextLine(),year=sc.nextLine(),location=sc.nextLine());
             list.add(student);
         }
 //        Iterator<Student> std=list.iterator();
@@ -30,6 +31,7 @@ public class LinklistStudentManagerment {
         System.out.println("1. thêm.");
         System.out.println("2. sửa.");
         System.out.println("3. xóa.");
+        System.out.println("4. tìm kiếm");
         luachon=sc.nextInt();
         switch (luachon){
             case 1:
@@ -40,6 +42,9 @@ public class LinklistStudentManagerment {
                 break;
             case 3:
                 removeStudentForList(sc,list);
+                break;
+            case 4:
+                searStudent(list,sc);
             default:
                 System.out.println("bạn không chọn tính năng nào.");
         }
@@ -53,8 +58,9 @@ public class LinklistStudentManagerment {
         int vitri;
         System.out.println("bạn muốn thêm vào vị trí nào: ");
         vitri=scanner.nextInt();
+        scanner.nextLine();
         System.out.println("nhập thông tin cho đối tượng cần thêm:");
-        Student student=new Student(scanner.nextLine(),scanner.nextLine(),scanner.nextInt(),scanner.nextLine());
+        Student student=new Student(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
         list.add(vitri,student);
         disPlay(list);
     }
@@ -62,6 +68,7 @@ public class LinklistStudentManagerment {
         int vitri;
         System.out.println("nhập vị trí cần xóa:");
         vitri=scanner.nextInt();
+        scanner.nextLine();
         list.remove(vitri);
         disPlay(list);
     }
@@ -69,9 +76,61 @@ public class LinklistStudentManagerment {
         int vitri;
         System.out.println("nhập vị trí cần sửa thông tin : ");
         vitri=scanner.nextInt();
+        scanner.nextLine();
         System.out.println("nhập thông tin cần sửa:");
-        Student student=new Student(scanner.nextLine(),scanner.nextLine(),scanner.nextInt(),scanner.nextLine());
+        Student student=new Student(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
         student=list.get(vitri);
         disPlay(list);
+    }
+    public static void searStudent(LinkedList<Student>list,Scanner scanner){
+        System.out.println("bạn muốn tìm theo các nào:");
+        System.out.println("vị trí 1:");
+        System.out.println("tên học viên 2");
+        System.out.println("mã học viên 3:");
+        int number=scanner.nextInt();
+        scanner.nextLine();
+        switch (number){
+            case 1:
+                int vitri=scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("nhập vị trí cần tìm:");
+                for(int i=0;i<list.size();i++){
+                    if(i==vitri){
+                        list.get(i).disPlay();
+                        break;
+                    }else {
+                        System.out.println("không tìm thấy vị trí.");
+                    }
+                }
+                break;
+            case 2:
+                System.out.println("nhập tên cần tìm");
+                String name=scanner.nextLine();
+                for(int i=0;i<list.size();i++){
+                    if(list.get(i).getName().equals(name)){
+                        list.get(i).disPlay();
+                        break;
+                    }else {
+                        System.out.println("không tìm thấy.");
+                    }
+                }
+                break;
+            case 3:
+                System.out.println("nhập id cần tìm:");
+                String id=scanner.nextLine();
+                for(int i=0;i<list.size();i++){
+                    if(list.get(i).getId().equals(id)){
+                        list.get(i).disPlay();
+                        break;
+                    }else {
+                        System.out.println("không tìm thấy.");
+                    }
+                }
+                break;
+            default:
+                System.out.println("ko lựa chọn tính năng nào.");
+        }
+
+
     }
 }

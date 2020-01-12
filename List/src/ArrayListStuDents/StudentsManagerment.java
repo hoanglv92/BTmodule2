@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class StudentsManagerment {
+public class
+StudentsManagerment {
     public static void main(String[] args) {
         ArrayList <Student> studentArrayList=new ArrayList();
         inputStudent(studentArrayList);
