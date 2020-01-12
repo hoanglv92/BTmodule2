@@ -66,7 +66,7 @@ StudentsManagerment {
         int index;
         System.out.println("nhập vị trí cần sửa:");
         index=sc.nextInt();
-        student5=(stArrayList).get(index);
+        student5=(stArrayList).set(index,student5);
           inputObjStudent(student5);
         for(int i=0;i<stArrayList.size();i++){
             stArrayList.get(i).disPlay();

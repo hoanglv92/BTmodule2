@@ -65,9 +65,8 @@ public class LinklistStudentManagerment {
         disPlay(list);
     }
     public static void removeStudentForList(Scanner scanner,LinkedList<Student> list){
-        int vitri;
         System.out.println("nhập vị trí cần xóa:");
-        vitri=scanner.nextInt();
+        int vitri=scanner.nextInt();
         scanner.nextLine();
         list.remove(vitri);
         disPlay(list);
@@ -79,7 +78,7 @@ public class LinklistStudentManagerment {
         scanner.nextLine();
         System.out.println("nhập thông tin cần sửa:");
         Student student=new Student(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextLine());
-        student=list.get(vitri);
+        student=list.set(vitri,student);
         disPlay(list);
     }
     public static void searStudent(LinkedList<Student>list,Scanner scanner){
@@ -94,37 +93,43 @@ public class LinklistStudentManagerment {
                 int vitri=scanner.nextInt();
                 scanner.nextLine();
                 System.out.println("nhập vị trí cần tìm:");
+                int temp=0;
                 for(int i=0;i<list.size();i++){
                     if(i==vitri){
                         list.get(i).disPlay();
-                        break;
-                    }else {
-                        System.out.println("không tìm thấy vị trí.");
+                        temp++;
                     }
+                }
+                if(temp==0){
+                    System.out.println("không tìm thấy.");
                 }
                 break;
             case 2:
                 System.out.println("nhập tên cần tìm");
                 String name=scanner.nextLine();
+                int temp1=0;
                 for(int i=0;i<list.size();i++){
                     if(list.get(i).getName().equals(name)){
                         list.get(i).disPlay();
-                        break;
-                    }else {
-                        System.out.println("không tìm thấy.");
+                        temp1++;
                     }
+                }
+                if(temp1==0){
+                    System.out.println("không tìm thấy.");
                 }
                 break;
             case 3:
                 System.out.println("nhập id cần tìm:");
                 String id=scanner.nextLine();
+                int temp2=0;
                 for(int i=0;i<list.size();i++){
                     if(list.get(i).getId().equals(id)){
                         list.get(i).disPlay();
-                        break;
-                    }else {
-                        System.out.println("không tìm thấy.");
+                        temp2++;
                     }
+                }
+                if(temp2==0){
+                    System.out.println("không tìm thấy.");
                 }
                 break;
             default:
