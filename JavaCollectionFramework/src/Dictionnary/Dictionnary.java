@@ -85,7 +85,7 @@ public class Dictionnary {
         for(Map.Entry<String,String>list:listDictionary.entrySet()){
             if(list.getKey().equals(key)){
                 System.out.println("đã có từ :"+key+ " trong từ điển, nếu bạn vẫn muốn thêm thì nghĩa của từ cũ sẽ bị thay đổi. ");
-                System.out.println("bạn chắc muốn sửa, chọn 1 nếu muốn sửa. ấn phím bât kì để thoát");
+                System.out.println("bạn chắc muốn sửa, chọn 1 nếu muốn sửa. ấn phím 2 để thoát");
                 int temp=scanner.nextInt();
                 switch (temp){
                     case 1:
@@ -105,12 +105,16 @@ public class Dictionnary {
     public static void removeElementForDictionary(HashMap<String,String>listDictionary , Scanner scanner){
         System.out.println("nhập key cần xóa khỏi từ điển");
         String key=scanner.nextLine();
-        for(Map.Entry<String,String>list:listDictionary.entrySet()){
-            if(list.getKey().equals(key)||list.getValue().equals(key)){
-                listDictionary.remove(key);
-            }else {
-                System.out.println("không timf thấy từ cần xóa");
+        boolean is =false;
+        for(String k:listDictionary.keySet()){
+            if(k.equals(key)){
+                listDictionary.remove(k);
+                is=true;
+                break;
             }
+        }
+        if(!is){
+            System.out.println("ko tìm thấy");
         }
     }
     public static void repairElementForDictionary(HashMap<String,String>listDictionary , Scanner scanner){
@@ -121,6 +125,7 @@ public class Dictionnary {
                 System.out.println("nhập nghĩa tiếng việt của từ cần sửa.");
                 String value=scanner.nextLine();
                 listDictionary.put(string,value);
+                break;
             }
         }
     }
