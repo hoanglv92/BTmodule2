@@ -12,7 +12,7 @@ public class SortStudent {
         sc.nextLine();
         System.out.println("nhập vào thông tin sinh viên.");
         LinkedList<Student>studentLinkedList=new LinkedList<>();
-        sortListByGender(studentLinkedList);
+        sortListByGender(studentLinkedList);    
         for(int i=0;i<numberStudent;i++){
             System.out.println("nhập tên Sv thứ :"+(i+1));
             String name=sc.nextLine();
