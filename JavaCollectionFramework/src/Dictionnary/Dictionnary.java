@@ -35,9 +35,15 @@ public class Dictionnary {
     public static void showMenu(Scanner scanner,HashMap<String,String>listDictionary){
         final int SHOW_DICTIONARY=1;
         final int FIND_KEY_DICTIONARY=2;
+        final int ADD_ELEMENT=3;
+        final int REMOVE_ELEMENT=4;
+        final int REPAIR_ELEMENT=5;
         System.out.println("nhập tính năng muốn chọn:");
         System.out.println("1.hiển thị từ điển.");
         System.out.println("2. tìm từ theo key");
+        System.out.println("3. thêm từ vào từ điển.");
+        System.out.println("4. xóa 1 từ khỏi từ điển.");
+        System.out.println("5. sửa lại một từ trong từ điển");
         int numberSelection=scanner.nextInt();
         scanner.nextLine();
         switch (numberSelection){
@@ -47,11 +53,77 @@ public class Dictionnary {
             case FIND_KEY_DICTIONARY :
                 findKeyInDictionary(listDictionary,scanner);
                 break;
+            case ADD_ELEMENT:
+                addElementForDictionary(listDictionary,scanner);
+                break;
+            case REMOVE_ELEMENT:
+                removeElementForDictionary(listDictionary,scanner);
+                break;
+            case REPAIR_ELEMENT:
+                repairElementForDictionary(listDictionary,scanner);
+                break;
             default:
                 System.out.println("hãy chọn lại.");
 
         }
-        showMenu(scanner,listDictionary);
+        System.out.println("nhập 1 để tiếp tục chọn tính năng khác, nếu không nhấn phím bất kì để tắt chương trình.");
+        int temp=scanner.nextInt();
+        switch (temp){
+            case 1:
+                showMenu(scanner,listDictionary);
+                break;
+            default:
+                System.out.println("kết thúc chương trình");
+        }
+
     }
+    public static void addElementForDictionary(HashMap<String,String>listDictionary , Scanner scanner){
+        System.out.println("nhập từ tiếng anh cần thêm:");
+        String key=scanner.nextLine();
+        System.out.println("nhập nghĩa tiếng việt của từ mới thêm:");
+        String value=scanner.nextLine();
+        for(Map.Entry<String,String>list:listDictionary.entrySet()){
+            if(list.getKey().equals(key)){
+                System.out.println("đã có từ :"+key+ " trong từ điển, nếu bạn vẫn muốn thêm thì nghĩa của từ cũ sẽ bị thay đổi. ");
+                System.out.println("bạn chắc muốn sửa, chọn 1 nếu muốn sửa. ấn phím bât kì để thoát");
+                int temp=scanner.nextInt();
+                switch (temp){
+                    case 1:
+                        listDictionary.put(key,value);
+                        break;
+                    default:
+                        System.out.println("kết thúc");
+                }
+
+            }else {
+                listDictionary.put(key,value);
+                break;
+            }
+        }
+        showDictionnary(listDictionary);
+    }
+    public static void removeElementForDictionary(HashMap<String,String>listDictionary , Scanner scanner){
+        System.out.println("nhập key cần xóa khỏi từ điển");
+        String key=scanner.nextLine();
+        for(Map.Entry<String,String>list:listDictionary.entrySet()){
+            if(list.getKey().equals(key)||list.getValue().equals(key)){
+                listDictionary.remove(key);
+            }else {
+                System.out.println("không timf thấy từ cần xóa");
+            }
+        }
+    }
+    public static void repairElementForDictionary(HashMap<String,String>listDictionary , Scanner scanner){
+        System.out.println("nhập từ cần sửa");
+        String string=scanner.nextLine();
+        for(Map.Entry<String,String>list:listDictionary.entrySet()){
+            if(list.getKey().equals(string)){
+                System.out.println("nhập nghĩa tiếng việt của từ cần sửa.");
+                String value=scanner.nextLine();
+                listDictionary.put(string,value);
+            }
+        }
+    }
+
 }
 
