@@ -10,7 +10,6 @@ public class ReadFileCsv {
             FileReader fileReader=new FileReader(iFile);
             BufferedReader bufferedReader=new BufferedReader(fileReader);
             String line=null;
-            ;
             while ((line=bufferedReader.readLine())!=null){
              String [] str= line.split(",");
                 System.out.println("code: "+str[4]+" country: "+str[5]);
