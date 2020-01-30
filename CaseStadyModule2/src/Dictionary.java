@@ -1,8 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.WindowAdapter;
 
-public class Dictionary {
+public class Dictionary extends JFrame {
     private JPanel Dictionary;
     private JTextField input;
     private JButton search;
