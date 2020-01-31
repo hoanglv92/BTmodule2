@@ -1,6 +1,7 @@
 package FindPrime;
 
 public class OptimizedPrimeFactorization extends Thread{
+
     private int number;
 
     public int getNumber() {
