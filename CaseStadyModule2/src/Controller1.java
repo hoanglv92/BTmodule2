@@ -32,12 +32,12 @@ public class Controller1 {
             System.out.println("nhap vao phien am va nghia cua tu do:");
             String valuatemp = scanner.nextLine();
             oVerWrite(isCheck, scanner, dictionary, engKey, src,valuatemp);
+
         }else {
             System.out.println("nhap vao phien am va nghia cua tu do:");
             String valuatemp = scanner.nextLine();
             dictionary.put(engKey, valuatemp);
-            writeOnFileDic(engKey, valuatemp, src);
-            readTxtImportToHashMap(src,dictionary);
+            writeOnFileDic(engKey,valuatemp,src);
         }
     }
     public boolean isExist(HashMap<String,String> dictionary,Scanner scanner,String engkey){
@@ -65,6 +65,7 @@ public class Controller1 {
         }
     }
     public void editInDic(HashMap<String,String> dictionary,Scanner scanner,String src) throws IOException {
+        final int showSuget=1;
         System.out.println("nhap vao tu can sua:");
         String eng = scanner.nextLine();
         boolean check = isExist(dictionary, scanner, eng);
@@ -72,10 +73,27 @@ public class Controller1 {
             System.out.println("nhap phien am va nghia cua tu:");
             String valuatemp = scanner.nextLine();
             oVerWrite(check, scanner, dictionary, eng, src, valuatemp);
-            overrideFileDic(dictionary, src);
-            readTxtImportToHashMap(src,dictionary);
         }else {
-            System.out.println("tu can sua khong co trong tu dien.");
+            System.out.println("tu can sua khong co trong tu dien.chon 1 de hien goi y cac tu gan dung,so khac thoat.");
+            int select=scanner.nextInt();
+            scanner.nextLine();
+            switch (select){
+                case showSuget:
+                    showSuggestions(eng,dictionary);
+                    System.out.println("nhap lai tu can sua.");
+                    String englLish=scanner.nextLine();
+                    boolean check1=isExist(dictionary,scanner,englLish);
+                    if (check1){
+                        System.out.println("nhap phien am va nghia cua tu:");
+                        String valuatemp = scanner.nextLine();
+                        oVerWrite(check1,scanner,dictionary,englLish,src,valuatemp);
+                    }else {
+                        System.out.println("tu ban nhap lai van ko dung, chuong trinh se thoat khoi tinh nang.");
+                    }
+                    break;
+                default:
+                    System.out.println("ban da huy khong chon.");
+            }
         }
     }
     public void overrideFileDic(HashMap<String,String> dictionary,String src) throws IOException {
@@ -83,8 +101,7 @@ public class Controller1 {
         FileWriter fileWriter=new FileWriter(file);
         BufferedWriter bufferedWriter=new BufferedWriter(fileWriter);
         for (HashMap.Entry<String,String>entry:dictionary.entrySet()){
-            bufferedWriter.write("@"+entry.getKey()+" /");
-            bufferedWriter.write(entry.getValue()+"\n\n");
+            bufferedWriter.write("@"+entry.getKey()+" /"+entry.getValue()+"\n\n");
         }
         bufferedWriter.write(";;");
         bufferedWriter.close();
@@ -99,55 +116,70 @@ public class Controller1 {
             e.printStackTrace();
         }
     }
-    public void stranlate(HashMap<String,String> dictionary,Scanner scanner){
+    public void stranlate(HashMap<String,String> dictionary,Scanner scanner) {
         System.out.println("nhap tu can dich: ");
-        String english=scanner.nextLine();
-        String regex=english+"(.*)";
-        Pattern pattern=Pattern.compile(regex);
-        for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            if (english.equals(key)) {
-                System.out.println(key + " = " + value);
-            }else {
-                Matcher matcher=pattern.matcher(key);
-                if(matcher.find()){
-                    System.out.println("co phai ban muon tim : "+key);
-                }
+        String english = scanner.nextLine();
+        if (isExist(dictionary, scanner, english)) {
+            for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (english.equals(key)) {
+                    System.out.println(key + " = " + value);
+                    break;
                 }
             }
-        System.out.println("nhap lai tu can dich dung");
-        String englishtemp=scanner.nextLine();
+        } else {
+                System.out.println("co phai ban muon tim : ");
+                showSuggestions(english,dictionary);
+                System.out.println("nhap lai tu can dich dung");
+                String englishtemp = scanner.nextLine();
+                for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (englishtemp.equals(key)) {
+                    System.out.println(key + "=" + value);
+                    break;
+                }
+            }
+        }
+    }
+    public void showSuggestions(String eng,HashMap<String,String> dictionary){
+        String regex = eng + "(.*)";
+        Pattern pattern = Pattern.compile(regex);
         for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
             String key = entry.getKey();
-            String value = entry.getValue();
-            if (englishtemp.equals(key)) {
-                System.out.println(key + "=" + value);
+            Matcher matcher = pattern.matcher(key);
+            if (matcher.find()){
+                System.out.println(key);
             }
         }
     }
     public void removeElementInDic(HashMap<String,String> dictionary,Scanner scanner,String src) throws IOException {
+        final int show = 1;
         System.out.println("nhap tu can xoa:");
         String english = scanner.nextLine();
-        String regex = english + "(.*?)";
+        String regex = english + "(.*)";
         Pattern pattern = Pattern.compile(regex);
-        for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            if (english.equals(key)) {
-                dictionary.remove(key);
-                overrideFileDic(dictionary, src);
-                readTxtImportToHashMap(src,dictionary);
-            } else {
-                Matcher matcher = pattern.matcher(key);
-                if (matcher.find()) {
-                    System.out.println("co phai ban muon tim : " + key);
-                    System.out.println("nhap lai tu can xoa:");
-                    String englishtemp = scanner.nextLine();
+        if (isExist(dictionary, scanner, english)) {
+            dictionary.remove(english);
+            overrideFileDic(dictionary, src);
+        } else {
+            System.out.println(" tu ban nhap ko co trong tu dien, nhap 1 de hien thi goi y:");
+            int select = scanner.nextInt();
+            scanner.nextLine();
+            if (select == show) {
+                showSuggestions(english, dictionary);
+                System.out.println("nhap lai tu can xoa:");
+                String englishtemp = scanner.nextLine();
+                boolean ischeck=isExist(dictionary,scanner,englishtemp);
+                if (ischeck) {
                     dictionary.remove(englishtemp);
                     overrideFileDic(dictionary, src);
-                    readTxtImportToHashMap(src,dictionary);
+                }else {
+                    System.out.println("tu ban nhap lai van ko dung, chuong trinh se thoat.");
                 }
+            }else {
+                System.out.println("ban da huy ko hien goi y.");
             }
         }
     }

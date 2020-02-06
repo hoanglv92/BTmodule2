@@ -43,6 +43,7 @@ public class Main {
                 break;
             default:
                 System.out.println("ban khong chon tinh nang nao,chuong trinh se tat.");
+                controller1.overrideFileDic(dictionary,src);
                 System.exit(0);
         }
         menuController(dictionary, scanner, controller1, src);
