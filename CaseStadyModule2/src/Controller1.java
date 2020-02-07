@@ -24,18 +24,11 @@ public class Controller1 {
             ex.printStackTrace();
         }
     }
-    public void addInDic(HashMap<String,String> dictionary,Scanner scanner,String src) throws IOException {
-        System.out.println("nhap vao tu tieng anh:");
-        String engKey=scanner.nextLine();
+    public void addInDic(HashMap<String,String> dictionary,Scanner scanner,String src,String engKey,String valuatemp) throws IOException {
         boolean isCheck=isExist(dictionary,scanner,engKey);
         if (isCheck) {
-            System.out.println("nhap vao phien am va nghia cua tu do:");
-            String valuatemp = scanner.nextLine();
             oVerWrite(isCheck, scanner, dictionary, engKey, src,valuatemp);
-
         }else {
-            System.out.println("nhap vao phien am va nghia cua tu do:");
-            String valuatemp = scanner.nextLine();
             dictionary.put(engKey, valuatemp);
             writeOnFileDic(engKey,valuatemp,src);
         }
@@ -64,35 +57,35 @@ public class Controller1 {
             }
         }
     }
-    public void editInDic(HashMap<String,String> dictionary,Scanner scanner,String src) throws IOException {
+    public void editInDic(HashMap<String,String> dictionary,Scanner scanner,String src,String mess1,String mess2,String mess3,String mess4,String mess5,String mess6,String mess7) throws IOException {
         final int showSuget=1;
-        System.out.println("nhap vao tu can sua:");
+        System.out.println(mess1);
         String eng = scanner.nextLine();
         boolean check = isExist(dictionary, scanner, eng);
         if (check) {
-            System.out.println("nhap phien am va nghia cua tu:");
+            System.out.println(mess2);
             String valuatemp = scanner.nextLine();
             oVerWrite(check, scanner, dictionary, eng, src, valuatemp);
         }else {
-            System.out.println("tu can sua khong co trong tu dien.chon 1 de hien goi y cac tu gan dung,so khac thoat.");
+            System.out.println(mess3);
             int select=scanner.nextInt();
             scanner.nextLine();
             switch (select){
                 case showSuget:
                     showSuggestions(eng,dictionary);
-                    System.out.println("nhap lai tu can sua.");
+                    System.out.println(mess4);
                     String englLish=scanner.nextLine();
                     boolean check1=isExist(dictionary,scanner,englLish);
                     if (check1){
-                        System.out.println("nhap phien am va nghia cua tu:");
+                        System.out.println(mess5);
                         String valuatemp = scanner.nextLine();
                         oVerWrite(check1,scanner,dictionary,englLish,src,valuatemp);
                     }else {
-                        System.out.println("tu ban nhap lai van ko dung, chuong trinh se thoat khoi tinh nang.");
+                        System.out.println(mess6);
                     }
                     break;
                 default:
-                    System.out.println("ban da huy khong chon.");
+                    System.out.println(mess7);
             }
         }
     }
@@ -116,9 +109,8 @@ public class Controller1 {
             e.printStackTrace();
         }
     }
-    public void stranlate(HashMap<String,String> dictionary,Scanner scanner) {
-        System.out.println("nhap tu can dich: ");
-        String english = scanner.nextLine();
+    public void stranlate(HashMap<String,String> dictionary,Scanner scanner,String english,String mess,String mess1) {
+
         if (isExist(dictionary, scanner, english)) {
             for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
                 String key = entry.getKey();
@@ -129,9 +121,9 @@ public class Controller1 {
                 }
             }
         } else {
-                System.out.println("co phai ban muon tim : ");
+                System.out.println(mess);
                 showSuggestions(english,dictionary);
-                System.out.println("nhap lai tu can dich dung");
+                System.out.println(mess1);
                 String englishtemp = scanner.nextLine();
                 for (HashMap.Entry<String, String> entry : dictionary.entrySet()) {
                 String key = entry.getKey();
@@ -154,32 +146,30 @@ public class Controller1 {
             }
         }
     }
-    public void removeElementInDic(HashMap<String,String> dictionary,Scanner scanner,String src) throws IOException {
+    public void removeElementInDic(HashMap<String,String> dictionary,Scanner scanner,String src,String english,String mess1,String mess2,String mess3,String mess4) throws IOException {
         final int show = 1;
-        System.out.println("nhap tu can xoa:");
-        String english = scanner.nextLine();
         String regex = english + "(.*)";
         Pattern pattern = Pattern.compile(regex);
         if (isExist(dictionary, scanner, english)) {
             dictionary.remove(english);
             overrideFileDic(dictionary, src);
         } else {
-            System.out.println(" tu ban nhap ko co trong tu dien, nhap 1 de hien thi goi y:");
+            System.out.println(mess1);
             int select = scanner.nextInt();
             scanner.nextLine();
             if (select == show) {
                 showSuggestions(english, dictionary);
-                System.out.println("nhap lai tu can xoa:");
+                System.out.println(mess2);
                 String englishtemp = scanner.nextLine();
                 boolean ischeck=isExist(dictionary,scanner,englishtemp);
                 if (ischeck) {
                     dictionary.remove(englishtemp);
                     overrideFileDic(dictionary, src);
                 }else {
-                    System.out.println("tu ban nhap lai van ko dung, chuong trinh se thoat.");
+                    System.out.println(mess3);
                 }
             }else {
-                System.out.println("ban da huy ko hien goi y.");
+                System.out.println(mess4);
             }
         }
     }
