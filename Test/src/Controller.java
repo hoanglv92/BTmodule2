@@ -28,14 +28,17 @@ public class Controller {
            viewSudent.showSTuden();
         }
     }
-    public void searchID(ArrayList<Student>arrayList, Scanner scanner){
+    public void searchID(ArrayList<Student>arrayList, Scanner scanner, String mess){
+        boolean ischeck=false;
         String id=scanner.nextLine();
         for (Student student:arrayList){
             if (student.getId().equals(id)){
+                ischeck=true;
                 student.showSTuden();
-            }else {
-                System.out.println("ma hoc vien khong ton tai.");
             }
+        }
+        if (!ischeck){
+            System.out.println(mess);
         }
     }
     public void showPointBigger85(ArrayList<Student>arrayList){
@@ -46,8 +49,20 @@ public class Controller {
             }
         }
     }
-    public void save(){
-       
+    public void save(String src, ArrayList<Student>arrayList){
+        try {
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(src));
+            for (Student student:arrayList){
+                objectOutputStream.writeObject(student);
+            }
+            objectOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
+
 
 }
