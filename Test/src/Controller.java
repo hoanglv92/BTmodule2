@@ -63,6 +63,15 @@ public class Controller {
         }
 
     }
+    public void addStudent(){
+
+    }
+    public void repaidStudent(){
+
+    }
+    public void removeStudent(){
+
+    }
 
 
 }

@@ -7,7 +7,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner=new Scanner(System.in);
         String src= "hocvien.txt";
-        String srcNew="/home/hoanglv/IdeaProjects/BTjava/Test/src/sapxepdiem.txt";
+        String sortpoid="/home/hoanglv/IdeaProjects/BTjava/Test/src/sapxepdiem.txt";
+        String sortName="/home/hoanglv/IdeaProjects/BTjava/Test/src/sapxephoten.txt";
         ArrayList<Student>arrayListStudens=new ArrayList<>();
         Controller controller=new Controller();
         controller.readFileTxt(src,arrayListStudens);
@@ -19,9 +20,14 @@ public class Main {
         String mess="ma hoc vien khong ton tai.";
         controller.searchID(arrayListStudens,scanner,mess);
         System.out.println("sap xep theo diem hov vien giam dan:");
-        Collections.sort(arrayListStudens);
+        arrayListStudens.sort(new SortPoid());
         controller.showStudent(arrayListStudens);
         System.out.println("luu doi tuong xuong file");
-        controller.save(srcNew,arrayListStudens);
+        controller.save(sortpoid,arrayListStudens);
+        System.out.println("sap xep theo ho ten");
+        arrayListStudens.sort(new Sortname());
+        controller.showStudent(arrayListStudens);
+        controller.save(sortName,arrayListStudens);
+
     }
 }

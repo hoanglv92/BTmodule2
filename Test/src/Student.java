@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Student implements Serializable ,Comparable<Student> {
+public class Student implements Serializable  {
     private String name;
     private String id;
     private String email;
@@ -49,14 +49,5 @@ public class Student implements Serializable ,Comparable<Student> {
         System.out.printf("%-50s%-30s%-50s%-5s\n",name,this.id,this.email,this.point);
     }
 
-    @Override
-    public int compareTo(Student student) {
-        if (Integer.parseInt(this.point)==Integer.parseInt(student.getPoint())){
-            return 0;
-        }else if (Integer.parseInt(this.point)>Integer.parseInt(student.getPoint())){
-            return -1;
-        }else {
-            return 1;
-        }
-    }
+
 }
