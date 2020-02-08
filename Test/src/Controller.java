@@ -63,15 +63,43 @@ public class Controller {
         }
 
     }
-    public void addStudent(){
-
+    public void addStudent(ArrayList<Student>arrayList,Scanner scanner){
+        System.out.println("nhap ten hoc vien:");
+        String name=scanner.nextLine();
+        System.out.println("nhap ma hoc vien:");
+        String id=scanner.nextLine();
+        System.out.println("nhap email");
+        String email=scanner.nextLine();
+        System.out.println("nhap diem");
+        String poid=scanner.nextLine();
+        Student student=new Student(name,id,email,poid);
+        arrayList.add(student);
+        showStudent(arrayList);
     }
-    public void repaidStudent(){
-
+    public void repaidStudent(ArrayList<Student>arrayList,Scanner scanner){
+        System.out.println("nhap ma hoc vien de sua thong tin hoc vien");
+        String id=scanner.nextLine();
+        for (Student student:arrayList){
+            if (student.getId().equals(id)){
+                System.out.println("nhap lai ten hoc vien");
+                String name=scanner.nextLine();
+                System.out.println("nhap ma hoc vien:");
+                String id1=scanner.nextLine();
+                System.out.println("nhap email");
+                String email=scanner.nextLine();
+                String poid=scanner.nextLine();
+                student.setName(name);
+                student.setId(id1);
+                student.setEmail(email);
+                student.setPoint(poid);
+            }
+        }
+        showStudent(arrayList);
     }
-    public void removeStudent(){
-
+    public void removeStudent(ArrayList<Student>arrayList,Scanner scanner){
+        System.out.println("nhap ma hoc vien can tim de xoa");
+        String id=scanner.nextLine();
+        arrayList.removeIf(student -> student.getId().equals(id));
+        showStudent(arrayList);
     }
-
-
 }

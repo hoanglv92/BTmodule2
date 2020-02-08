@@ -28,6 +28,7 @@ public class Main {
         arrayListStudens.sort(new Sortname());
         controller.showStudent(arrayListStudens);
         controller.save(sortName,arrayListStudens);
+        controller.removeStudent(arrayListStudens,scanner);
 
     }
 }
