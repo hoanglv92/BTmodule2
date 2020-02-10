@@ -90,7 +90,7 @@ public class GuiDIC extends JFrame{
 
             }
         });
-        
+
         savaFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -154,16 +154,6 @@ public class GuiDIC extends JFrame{
         }
         return isedit;
     }
-    public String showDictionary(HashMap<String,String> hashMapDictionaryEngToVn){
-        String string="";
-        for (HashMap.Entry<String, String> entry : hashMapDictionaryEngToVn.entrySet()) {
-            String key = entry.getKey();
-            String value=entry.getValue();
-            string+=key+"="+value+"\n";
-        }
-        return string;
-    }
-
     public String showSuggestions(String stringKey,HashMap<String,String> hashMapDictionaryEngToVn,ArrayList<String>arrayList){
         String regex = stringKey + "(.*)";
         Pattern pattern = Pattern.compile(regex);
