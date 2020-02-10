@@ -3,10 +3,8 @@ package DicNew;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.awt.event.ComponentAdapter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +21,13 @@ public class GuiDIC extends JFrame{
     private JButton resetButton;
     private JTextArea textArea1;
     private JTextArea textArea2;
-    private JButton savaFileButton;
+    private JButton saveFileButton;
     public GuiDIC() {
+        String src="/home/hoanglv/IdeaProjects/BTjava/CaseStadyModule2/src/DicNew/anhviet1.txt";
         HashMap<String,String>hashMapDic=new HashMap<>();
-        readTxtImportToHashMap(hashMapDic);
+        ControllerDic controllerDic=new ControllerDic();
+        ReadFileWriterFile readFileWriterFile=new ReadFileWriterFile();
+        readFileWriterFile.readTxtImportToHashMap(hashMapDic,src);
         ArrayList<String>arrayList=new ArrayList<>();
         add(panel1);
         setSize(600, 700);
@@ -59,6 +60,7 @@ public class GuiDIC extends JFrame{
                 if ((!"".equals(keyString))&&(!"".equals(valueString))) {
                     boolean isCheck=edit(hashMapDic, keyString);
                     if (isCheck) {
+                        hashMapDic.put(keyString,valueString);
                         JOptionPane.showMessageDialog(panel1,"sua thanh cong");
                     }else {
                         JOptionPane.showMessageDialog(panel1,"tu ban nhap ko co trong tu dien");
@@ -87,37 +89,31 @@ public class GuiDIC extends JFrame{
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                String keyString=getTextArea1().getText();
+                if (keyString.equals("")){
+                    JOptionPane.showMessageDialog(panel1,"nhap tu tieng anh can xoa vao o iput.");
+                }else {
+                    boolean isCheckExist=isCheckStringKey(hashMapDic,keyString);
+                    if (isCheckExist){
+                        hashMapDic.remove(keyString);
+                        JOptionPane.showMessageDialog(panel1,"xoa thanh cong.");
+                    }else {
+                        JOptionPane.showMessageDialog(panel1,"tu ban nhap khong co trong tu dien.");
+                    }
+                }
             }
         });
-
-        savaFileButton.addActionListener(new ActionListener() {
+        saveFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                boolean isSuccress=readFileWriterFile.writerDicToFile(hashMapDic,src);
+                if (isSuccress){
+                    JOptionPane.showMessageDialog(panel1,"luu thanh cong");
+                }else {
+                    JOptionPane.showMessageDialog(panel1,"luu khong than cong.");
+                }
             }
         });
-    }
-
-    public void readTxtImportToHashMap(HashMap<String,String> dictionary) {
-        String src="/home/hoanglv/IdeaProjects/BTjava/CaseStadyModule2/src/DicNew/anhviet1.txt";
-        try {
-            InputStream in = new FileInputStream(src);
-            Scanner scanner = new Scanner(new InputStreamReader(in, StandardCharsets.UTF_8));
-            scanner.useDelimiter("\\Z");
-            String content = scanner.next();
-            scanner.close();
-            // remove all new line
-            content = content.replaceAll("\\n", ";");
-            // regex
-            Pattern p = Pattern.compile("@(.*?) /(.*?);;");
-            Matcher m = p.matcher(content);
-            while (m.find()) {
-                dictionary.put(m.group(1),m.group(2));
-            }
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
     }
     public String stranlate(HashMap<String,String>hashMapDictionaryEngToVn,String keyString,ArrayList<String>arrayList){
         boolean isCheck=isCheckStringKey(hashMapDictionaryEngToVn,keyString);
