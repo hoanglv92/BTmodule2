@@ -24,6 +24,7 @@ public class ControllerEnglishToVn implements Dictionary{
             ex.printStackTrace();
         }
     }
+
     public void addInDic(HashMap<String,String> dictionary,Scanner scanner,String src,String engKey,String valuatemp) throws IOException {
         boolean isCheck=isExist(dictionary,scanner,engKey);
         if (isCheck) {

@@ -3,8 +3,16 @@ package DicNew;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GuiDIC extends JFrame{
     private JButton addButton;
@@ -13,15 +21,151 @@ public class GuiDIC extends JFrame{
     private JButton editButton;
     private JButton removeButton;
     private JButton resetButton;
-    private JButton showDicButton;
     private JTextArea textArea1;
     private JTextArea textArea2;
 
+
     public GuiDIC() {
+        HashMap<String,String>hashMapDic=new HashMap<>();
+        readTxtImportToHashMap(hashMapDic);
+        ArrayList<String>arrayList=new ArrayList<>();
         add(panel1);
         setSize(600, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        stranlateButton.addActionListener(new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String stringKey=getTextArea1().getText();
+                if (!"".equals(getTextArea1().getText())){
+                    textArea2.setText(stranlate(hashMapDic,stringKey,arrayList));
+                }else {
+                    JOptionPane.showMessageDialog(panel1,"ban da bo trong o nhap du lieu");
+                }
+            }
+        });
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea1.setText("");
+                textArea2.setText("");
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(panel1,"nhap tu can sua vao input,va nghia vao ouput.");
+                String keyString=getTextArea1().getText();
+                String valueString=getTextArea2().getText();
+                if ((!"".equals(keyString))&&(!"".equals(valueString))) {
+                    boolean isCheck=edit(hashMapDic, keyString,valueString);
+                    if (isCheck) {
+                        JOptionPane.showMessageDialog(panel1,"sua thanh cong");
+                    }else {
+                        JOptionPane.showMessageDialog(panel1,"tu ban nhap ko co trong tu dien");
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(panel1,"Nhap day du lieu vao o input,va output");
+                }
+            }
+        });
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+    public void readTxtImportToHashMap(HashMap<String,String> dictionary) {
+        String src="/home/hoanglv/IdeaProjects/BTjava/CaseStadyModule2/src/DicNew/anhviet1.txt";
+        try {
+            InputStream in = new FileInputStream(src);
+            Scanner scanner = new Scanner(new InputStreamReader(in, StandardCharsets.UTF_8));
+            scanner.useDelimiter("\\Z");
+            String content = scanner.next();
+            scanner.close();
+            // remove all new line
+            content = content.replaceAll("\\n", ";");
+            // regex
+            Pattern p = Pattern.compile("@(.*?) /(.*?);;");
+            Matcher m = p.matcher(content);
+            while (m.find()) {
+                dictionary.put(m.group(1),m.group(2));
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public String stranlate(HashMap<String,String>hashMapDictionaryEngToVn,String keyString,ArrayList<String>arrayList){
+        boolean isCheck=isCheckStringKey(hashMapDictionaryEngToVn,keyString);
+        String shows= "";
+        if (isCheck) {
+            for (HashMap.Entry < String, String > entry:hashMapDictionaryEngToVn.entrySet()){
+                String key = entry.getKey();
+                String value=entry.getValue();
+                if (keyString.equals(key)){
+                    return shows+=key+"="+value;
+                }
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(panel1,"tu ban nhap ko co trong tu dien,hien thi goi y tai o output.");
+           return showSuggestions(keyString,hashMapDictionaryEngToVn,arrayList);
+
+        }
+        return shows;
+
+    }
+    public boolean edit(HashMap<String,String>hashMapDictionaryEngToVn,String keyString,String valuetemp){
+        boolean isCheck=isCheckStringKey(hashMapDictionaryEngToVn, keyString);
+        boolean isedit=false;
+        if (isCheck){
+            for (HashMap.Entry < String, String > entry:hashMapDictionaryEngToVn.entrySet()) {
+                String key = entry.getKey();
+                String value=entry.getValue();
+                if (keyString.equals(key)) {
+                    hashMapDictionaryEngToVn.put(keyString, valuetemp);
+                    isedit = true;
+
+                }
+            }
+        }
+        return isedit;
+    }
+
+    public String showSuggestions(String stringKey,HashMap<String,String> hashMapDictionaryEngToVn,ArrayList<String>arrayList){
+        String regex = stringKey + "(.*)";
+        Pattern pattern = Pattern.compile(regex);
+        for (HashMap.Entry<String, String> entry : hashMapDictionaryEngToVn.entrySet()) {
+            String key = entry.getKey();
+            Matcher matcher = pattern.matcher(key);
+            if (matcher.find()){
+                arrayList.add(key);
+            }
+        }
+        String str="";
+        for (int i=0;i<arrayList.size();i++){
+            str+=arrayList.get(i)+"\n";
+        }
+        return str;
+    }
+    public boolean isCheckStringKey(HashMap<String,String>hashMapDictionaryEngToVn,String stringKey){
+        boolean ischeck=false;
+        for (HashMap.Entry<String,String> entry:hashMapDictionaryEngToVn.entrySet()){
+            String key=entry.getKey();
+            if (stringKey.equals(key)){
+                ischeck=true;
+            }
+        }
+        return ischeck;
     }
 
     public JButton getAddButton() {
@@ -72,13 +216,6 @@ public class GuiDIC extends JFrame{
         this.resetButton = resetButton;
     }
 
-    public JButton getShowDicButton() {
-        return showDicButton;
-    }
-
-    public void setShowDicButton(JButton showDicButton) {
-        this.showDicButton = showDicButton;
-    }
 
     public JTextArea getTextArea1() {
         return textArea1;
@@ -95,4 +232,5 @@ public class GuiDIC extends JFrame{
     public void setTextArea2(JTextArea textArea2) {
         this.textArea2 = textArea2;
     }
+
 }
