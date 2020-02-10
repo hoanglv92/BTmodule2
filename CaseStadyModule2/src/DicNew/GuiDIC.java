@@ -23,8 +23,7 @@ public class GuiDIC extends JFrame{
     private JButton resetButton;
     private JTextArea textArea1;
     private JTextArea textArea2;
-
-
+    private JButton savaFileButton;
     public GuiDIC() {
         HashMap<String,String>hashMapDic=new HashMap<>();
         readTxtImportToHashMap(hashMapDic);
@@ -55,28 +54,44 @@ public class GuiDIC extends JFrame{
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(panel1,"nhap tu can sua vao input,va nghia vao ouput.");
                 String keyString=getTextArea1().getText();
                 String valueString=getTextArea2().getText();
                 if ((!"".equals(keyString))&&(!"".equals(valueString))) {
-                    boolean isCheck=edit(hashMapDic, keyString,valueString);
+                    boolean isCheck=edit(hashMapDic, keyString);
                     if (isCheck) {
                         JOptionPane.showMessageDialog(panel1,"sua thanh cong");
                     }else {
                         JOptionPane.showMessageDialog(panel1,"tu ban nhap ko co trong tu dien");
                     }
                 }else {
-                    JOptionPane.showMessageDialog(panel1,"Nhap day du lieu vao o input,va output");
+                    JOptionPane.showMessageDialog(panel1,"Nhap tu can sua  vao o input,va nghia cua no vao output");
                 }
             }
         });
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if ("".equals(getTextArea1().getText())&&"".equals(getTextArea2().getText())){
+                JOptionPane.showMessageDialog(panel1,"nhap tu tieng anh vao o input,va dich nghia vao o output.");
+                }else {
+                    String keyString=getTextArea1().getText();
+                    boolean checkSuccess=addImleMent(hashMapDic,keyString);
+                    if (checkSuccess){
+                        JOptionPane.showMessageDialog(panel1,"them thanh cong");
+                    }else {
+                        JOptionPane.showMessageDialog(panel1, "them khong thanh cong");
+                    }
+                }
             }
         });
         removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        
+        savaFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -124,7 +139,7 @@ public class GuiDIC extends JFrame{
         return shows;
 
     }
-    public boolean edit(HashMap<String,String>hashMapDictionaryEngToVn,String keyString,String valuetemp){
+    public boolean edit(HashMap<String,String>hashMapDictionaryEngToVn,String keyString){
         boolean isCheck=isCheckStringKey(hashMapDictionaryEngToVn, keyString);
         boolean isedit=false;
         if (isCheck){
@@ -132,13 +147,21 @@ public class GuiDIC extends JFrame{
                 String key = entry.getKey();
                 String value=entry.getValue();
                 if (keyString.equals(key)) {
-                    hashMapDictionaryEngToVn.put(keyString, valuetemp);
                     isedit = true;
 
                 }
             }
         }
         return isedit;
+    }
+    public String showDictionary(HashMap<String,String> hashMapDictionaryEngToVn){
+        String string="";
+        for (HashMap.Entry<String, String> entry : hashMapDictionaryEngToVn.entrySet()) {
+            String key = entry.getKey();
+            String value=entry.getValue();
+            string+=key+"="+value+"\n";
+        }
+        return string;
     }
 
     public String showSuggestions(String stringKey,HashMap<String,String> hashMapDictionaryEngToVn,ArrayList<String>arrayList){
@@ -167,6 +190,19 @@ public class GuiDIC extends JFrame{
         }
         return ischeck;
     }
+    public boolean addImleMent(HashMap<String,String>hashMapDictionaryEngToVn,String stringKey){
+        boolean check=false;
+        boolean isCheck=isCheckStringKey(hashMapDictionaryEngToVn,stringKey);
+        if (isCheck){
+            JOptionPane.showMessageDialog(panel1,"tu ban nhap da co trong tu dien");
+        }else {
+            String value=getTextArea2().getText();
+            hashMapDictionaryEngToVn.put(stringKey,value);
+            check= true;
+        }
+        return check;
+    }
+
 
     public JButton getAddButton() {
         return addButton;
