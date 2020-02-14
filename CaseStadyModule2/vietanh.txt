@@ -44761,6 +44761,9 @@
 @tùy theo
 * adv#- according to
 
+@bằng quả ớt
+của bằng , bằng quả ớt
+
 @chiếu lệ
 - For form's sake#=làm chiếu lệ+to work for form's sake#=hỏi thăm vài câu chiếu lệ+to enquire after (someone) for form's sake
 
@@ -52287,6 +52290,9 @@
 
 @sơn cốc
 * noun#-dale, ravine
+
+@xin chào
+hello
 
 @bớt xớ
 * khẩu ngữ#- như bớt xén#-To bargain, to haggle#=đã mua rẻ lại còn muốn bớt xén+though it was a bargain, she still haggled

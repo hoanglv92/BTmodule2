@@ -3,12 +3,8 @@ package DicNew;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +21,7 @@ public class GuiDIC extends JFrame{
     public GuiDIC() {
         String src="/home/hoanglv/IdeaProjects/BTjava/CaseStadyModule2/src/DicNew/anhviet1.txt";
         HashMap<String,String>hashMapDic=new HashMap<>();
-        ControllerDic controllerDic=new ControllerDic();
+        ControlFileIO controllerDic=new ControlFileIO();
         ReadFileWriterFile readFileWriterFile=new ReadFileWriterFile();
         readFileWriterFile.readTxtImportToHashMap(hashMapDic,src);
         ArrayList<String>arrayList=new ArrayList<>();

@@ -9,16 +9,9 @@ public class Main {
         String srcVnToEng="vietanh.txt";
         HashMap<String,String>dictionaryVnToEng=new HashMap<>();
         HashMap<String,String> dictionaryEngToVn=new HashMap<String, String>();
-        AddImplementForDic addImplementForDic=new AddImplementForDic();
-        EditElementForDic editElementForDic=new EditElementForDic();
-        IsExist isExist=new IsExist();
-        OverWriter overWriter=new OverWriter();
-        ReadFileImportToHashMap readFileImportToHashMap=new ReadFileImportToHashMap();
-        RemoveElementForDic removeElementForDic=new RemoveElementForDic();
-        SaveHashMapTOFile saveHashMapTOFile=new SaveHashMapTOFile();
-        ShowSuggesTions showSuggesTions=new ShowSuggesTions();
-        StranLate stranLate=new StranLate();
-        ShowHashMap showHashMap=new ShowHashMap();
+        Controls controls=new Controls();
+        Support support=new Support();
+        ReadFileWriterFile readFileWriterFile=new ReadFileWriterFile();
         System.out.println("vui long chon loai tu dien:");
         System.out.println("nhap 1 chon tu dien anh viet.");
         System.out.println("nhap 2 chon tu dien viet anh.");
@@ -28,26 +21,21 @@ public class Main {
         scanner.nextLine();
         switch (select){
             case dictionaryEnglishToVn:
-                readFileImportToHashMap.readTxtImportToHashMap(src,dictionaryEngToVn);
-                menuController(dictionaryEngToVn,scanner,src,stranLate,showSuggesTions,isExist,
-                        addImplementForDic,overWriter,editElementForDic,removeElementForDic,showHashMap,saveHashMapTOFile);
+                readFileWriterFile.readTxtImportToHashMap(src,dictionaryEngToVn);
+                menuController(dictionaryEngToVn,scanner,src,readFileWriterFile,controls,support);
                 break;
             case dictionaryVietnamToEng:
-                readFileImportToHashMap.readTxtImportToHashMap(srcVnToEng,dictionaryVnToEng);
-                menuController(dictionaryVnToEng,scanner,srcVnToEng,stranLate,showSuggesTions,isExist,
-                        addImplementForDic,overWriter,editElementForDic,removeElementForDic,showHashMap,saveHashMapTOFile);
+                readFileWriterFile.readTxtImportToHashMap(srcVnToEng,dictionaryVnToEng);
+                menuController(dictionaryVnToEng,scanner,srcVnToEng,readFileWriterFile,controls,support);
                 break;
             default:
-                System.out.println("vui long chon 1 trong 2 loai tu dien.");
+                System.out.println("ban khong chon chuong trinh tu dong thoat.");
         }
     }
     public static void menuController(HashMap<String,String> dictionary,
                                       Scanner scanner,
-                                      String src,StranLate stranLate,ShowSuggesTions showSuggesTions,
-                                      IsExist isExist,AddImplementForDic addImplementForDic,
-                                      OverWriter overWriter,EditElementForDic editElementForDic,
-                                      RemoveElementForDic removeElementForDic,
-                                      ShowHashMap showHashMap,SaveHashMapTOFile saveHashMapTOFile) throws IOException {
+                                      String src,ReadFileWriterFile readFileWriterFile,
+                                      Controls controls,Support support) throws IOException {
         final int stranlate=1;
         final int add=2;
         final int edit=3;
@@ -67,14 +55,14 @@ public class Main {
                 String stringKey = scanner.nextLine();
                 String mess="nhap vao tu can dich moi,dua vao goi y.";
                 String mess14="tu ban nhap lai khong co trong tu dien chuong trinh se thoat.";
-                stranLate.stranlate(dictionary,scanner,stringKey,mess,mess14,isExist,showSuggesTions);
+                controls.stranlate(dictionary,scanner,stringKey,mess,mess14,support);
                 break;
             case add:
                 System.out.println("nhap vao tu can them:");
                 String stringKey1=scanner.nextLine();
                 System.out.println("nhap vao phien am va nghia cua tu do:");
                 String valuatemp1 = scanner.nextLine();
-                addImplementForDic.addInDic(dictionary,scanner,src,stringKey1,valuatemp1,isExist,overWriter);
+                controls.addInDic(dictionary,scanner,src,stringKey1,valuatemp1,support);
                 break;
             case edit:
                 String mess3="nhap vao tu can sua:";
@@ -84,7 +72,7 @@ public class Main {
                 String mess7="nhap phien am va nghia cua tu:";
                 String mess8="tu ban nhap lai van ko dung, chuong trinh se thoat khoi tinh nang.";
                 String mess9="ban da huy khong chon.";
-                editElementForDic.editInDic(dictionary,scanner,src,mess3,mess4,mess5,mess6,mess7,mess8,mess9,isExist,showSuggesTions,overWriter);
+                controls.editInDic(dictionary,scanner,src,mess3,mess4,mess5,mess6,mess7,mess8,mess9,support);
                 break;
             case remove:
                 System.out.println("nhap tu can xoa:");
@@ -93,17 +81,16 @@ public class Main {
                 String mess11="nhap lai tu can xoa:";
                 String mess12="tu ban nhap lai van ko dung, chuong trinh se thoat.";
                 String mess13="ban da huy ko hien goi y.";
-                removeElementForDic.removeElementInDic(dictionary,scanner,src,english1,mess10,mess11,mess12,mess13,isExist,showSuggesTions);
+                controls.removeElementInDic(dictionary,scanner,src,english1,mess10,mess11,mess12,mess13,support);
                 break;
             case show:
-                showHashMap.showHashMap(dictionary);
+                support.showHashMap(dictionary);
                 break;
             default:
                 System.out.println("ban khong chon tinh nang nao,chuong trinh se tat.");
-                saveHashMapTOFile.overrideFileDic(dictionary,src);
+                readFileWriterFile.overrideFileDic(dictionary,src);
                 System.exit(0);
         }
-        menuController(dictionary, scanner, src,stranLate,showSuggesTions,isExist,
-                addImplementForDic,overWriter,editElementForDic,removeElementForDic,showHashMap,saveHashMapTOFile);
+        menuController(dictionary, scanner, src,readFileWriterFile,controls,support);
     }
 }
